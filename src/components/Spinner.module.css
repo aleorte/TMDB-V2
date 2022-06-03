@@ -1,0 +1,13 @@
+.spinner{
+    display: flex;
+    justify-content: center;
+}
+.spinning{
+    animation: giro 1s linear infinite;
+}
+
+@keyframes giro {
+    to {
+        transform: rotate(360deg);
+    }
+}
