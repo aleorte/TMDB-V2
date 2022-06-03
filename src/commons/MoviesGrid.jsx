@@ -20,7 +20,6 @@ export function MoviesGrid() {
         "&api_key=9187b8dc72c1d964dc650264b4b28adf"
       : "/movie/popular?api_key=9187b8dc72c1d964dc650264b4b28adf";
     get(searchUrl).then((data) => {
-      console.log(data);
       setMovies(data.results);
       setLoading(false);
     });

@@ -5,9 +5,12 @@ const User = require("./models/user");
 const cookieParser = require("cookie-parser");
 const sessions = require("express-session");
 const passport = require("passport");
+const cors= require("cors")
 const localStrategy = require("passport-local").Strategy;
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.json());
 
