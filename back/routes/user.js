@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require("passport");
-const User = require("../models/user");
+const {User} = require("../models");
 const userRouter = express.Router();
 
 userRouter.post("/register/", (req, res) => {

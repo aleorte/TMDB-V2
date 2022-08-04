@@ -1,11 +1,10 @@
-import { MoviesGrid } from "../commons/MoviesGrid";
-import { Search } from "../components/Search";
-
+import { MoviesGrid } from "../commons/movieGrid";
+import {Navbar} from "../components/Navbar"
 export function LandingPage() {
   return (
     <div>
-      <Search />
-      <MoviesGrid />
+      <Navbar/>
+      <MoviesGrid favorite={false}/>
     </div>
   );
 }

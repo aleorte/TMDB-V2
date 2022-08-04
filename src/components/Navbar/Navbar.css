@@ -1,0 +1,109 @@
+.navbar {
+    width: 100%;
+    color: white;
+    font-size: 14px;
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);}
+  
+    .scrolled{
+      background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.5) 50%);
+      width: 100%;
+      color: white;
+      font-size: 14px;
+      position: fixed;
+      z-index: 5;
+    }
+  
+    .container {
+      padding: 0px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;}
+  
+      .left {
+        display: flex;
+        align-items: center;}
+  
+        .left>img {
+          height: 25px;
+          margin-right: 40px;
+        }
+  
+        .left>span {
+          margin-right: 20px;
+          cursor: pointer;
+        }
+      
+  
+      .right {
+        display: flex;
+        align-items: center;}
+  
+        .right>.icon {
+          margin: 0px 15px;
+          cursor: pointer;
+        }
+  
+        .right>img {
+          width: 30px;
+          height: 30px;
+          border-radius: 5px;
+          object-fit: cover;
+          cursor: pointer;
+        }
+  
+       
+          .options {
+            display: none;
+            background-color: var(--main-color);
+            border-radius: 5px;
+          }
+  
+          .options > span {
+            padding: 10px;
+            cursor: pointer;
+          }
+  
+          .options > span:hover {
+              display: flex;
+              flex-direction: column;
+              position: absolute;
+          }
+          .search {
+            display: flex;
+            gap: 0.4rem;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem;
+            padding-left: 0.5rem;}
+            .search>button {
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+              color: aliceblue;
+            }
+
+
+            .showTextFieldSearch {
+              width: 0;
+              opacity: 0;
+              visibility: hidden;
+              transition: 0.3s ease-in-out;
+              background-color: transparent;
+              border: none;
+              color: white;
+            }
+          .show-search {
+            border: 1px solid white;
+            background-color: rgba(0, 0, 0, 0.6);}
+            .TextFieldSearch {
+              width: 100%;
+              opacity: 1;
+              visibility: visible;
+              padding: 0.3rem;
+            }
+          
+        

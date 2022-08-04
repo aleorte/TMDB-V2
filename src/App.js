@@ -1,33 +1,28 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { MovieDetails } from "./components/MovieDetails";
 import { LandingPage } from "./pages/LandingPage";
 import { Login } from "./components/Login";
-import { Navbar } from "./components/Navbar";
+import { FavoriteView } from "./pages/FavoriteView";
+import { CssBaseline } from "@mui/material";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styled/theme.tsx'
 
 function App() {
-  const login = false;
   return (
+    <div>
+       <ThemeProvider theme={theme}>
+          <CssBaseline />
     <Router>
-      <header>
-        {login ? (
-          <Link to="/logout">Salir</Link>
-        ) : (
-          <Link to="/login">Iniciar Sesión</Link>
-        )}
-      </header>
-      <main>
         <Routes>
-          <Route path="/movies/:movieId" element={<MovieDetails />}>
-            {" "}
-          </Route>
           <Route path="/" element={<LandingPage />}>
             {" "}
           </Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/favorites" element={<FavoriteView />}></Route>
         </Routes>
-      </main>
     </Router>
+    </ThemeProvider>
+    </div>
   );
 }
 

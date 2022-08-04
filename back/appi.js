@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("./db");
 const router = require("./routes");
-const User = require("./models/user");
+const {User, Favorite} = require("./models");
 const cookieParser = require("cookie-parser");
 const sessions = require("express-session");
 const passport = require("passport");
@@ -62,7 +62,7 @@ passport.deserializeUser(function (id, done) {
 
 app.use("/api", router);
 
-db.sync({ force: false })
+db.sync({ force: false    })
   .then(() => {
     app.listen(3001, () => {
       console.log("server on port 3001");
