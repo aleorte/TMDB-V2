@@ -4,7 +4,7 @@ export function LandingPage() {
   return (
     <div>
       <Navbar/>
-      <MoviesGrid favorite={false}/>
+      <MoviesGrid/>
     </div>
   );
 }

@@ -5,11 +5,15 @@ import { Login } from "./components/Login";
 import { FavoriteView } from "./pages/FavoriteView";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from '@mui/material/styles';
+import { Provider } from "react-redux";
 import theme from './styled/theme.tsx'
+import store from "./State/store";
+
 
 function App() {
   return (
     <div>
+       <Provider store={store}>
        <ThemeProvider theme={theme}>
           <CssBaseline />
     <Router>
@@ -18,10 +22,11 @@ function App() {
             {" "}
           </Route>
           <Route path="/login" element={<Login />}></Route>
-          <Route path="/favorites" element={<FavoriteView />}></Route>
+          <Route path="/favorites/:userId" element={<FavoriteView />}></Route>
         </Routes>
     </Router>
     </ThemeProvider>
+    </Provider>
     </div>
   );
 }

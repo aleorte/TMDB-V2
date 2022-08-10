@@ -5,7 +5,7 @@ export function FavoriteView(){
     return (
         <>
         <Navbar/>
-        <MoviesGrid favorite={true}/>
+        <MoviesGrid/>
         </>
     )
 }

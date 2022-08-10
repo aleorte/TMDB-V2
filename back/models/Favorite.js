@@ -12,15 +12,19 @@ Favorite.init(
       type: S.INTEGER,
       allowNull: false,
     },
+    title:{
+      type: S.STRING,
+      allowNull: false,
+    },
     overview: {
       type: S.TEXT,
       allowNull: false,
     },
-    path: {
+    poster_path: {
       type: S.STRING,
       allowNull: false,
     },
-    vote:{
+    vote_average:{
       type:S.DECIMAL,
       allowNull:false
     }

@@ -62,7 +62,7 @@ passport.deserializeUser(function (id, done) {
 
 app.use("/api", router);
 
-db.sync({ force: false    })
+db.sync({ force: false})
   .then(() => {
     app.listen(3001, () => {
       console.log("server on port 3001");

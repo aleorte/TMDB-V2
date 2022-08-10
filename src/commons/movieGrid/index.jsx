@@ -1,70 +1,90 @@
 import { useEffect, useState } from "react";
 import { MovieCard } from "../movieCard";
 import { get } from "../../utils/https";
-import { Spinner } from "../../components/Spinner";
+import { Spinner } from "../../components/Spinner/Spinner";
 import { UseQuery } from "../../utils/UseQuery";
 import style from "./moviesGrid.module.css";
 import YouTube from "react-youtube";
 import axios from "axios";
 import { url } from "../../utils/https";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
+import {getFavorites} from "../../State/favorite";
 
-export function MoviesGrid(favorite) {
+export function MoviesGrid() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState({});
   const [loading, setLoading] = useState(true);
   const [trailer, setTrailer] = useState(null);
   const [playing, setPlaying] = useState(false);
-  const[fav,setFav]=useState(false)
+  const dispatch=useDispatch()
+  const favorite = useSelector((state) => state.favorite);
+  const user = useSelector((state) => state.user);
   const query = UseQuery();
+  const location = useLocation().pathname;
+  const path=location.slice(1, 10)
   const search = query.get("search");
   const apiKey = "api_key=9187b8dc72c1d964dc650264b4b28adf";
 
 
+const fetchMovie = async (id) => {
+  const { data } = await axios.get(
+    `${url}/movie/${id}?${apiKey}&append_to_response=videos`
+  );
+  if (data.videos && data.videos.results) {
+    const trailer1 = data.videos.results.find(
+      (vid) => vid.name === "Official Trailer"
+    );
+    setTrailer(trailer1 ? trailer1 : data.videos.results[0]);
+    setSelectedMovie(data);
+  }
+};
+
+
+const selectMovie = (movie) => {
+  path==="favorites"?fetchMovie(movie.movieId):fetchMovie(movie.id);
+  setPlaying(false);
+  window.scrollTo(0, 0);
+};
+const selecttMovie = (movie) => {
+  path==="favorites"?fetchMovie(movie.movieId):fetchMovie(movie.id);
+  setPlaying(false);
+  window.scrollTo(0, 0);
+};
+
+  useEffect(()=>{
+    const asyncfun=async()=>{
+      const fav=await dispatch(getFavorites(user.userInfo.id))
+    return fav}
+    asyncfun()
+  },[])
 
   useEffect(() => {
-    setFav(favorite)
-      console.log("entreeeeeeeee")
-      setLoading(true);
-      const searchUrl = search
+        setLoading(true);
+        if(path==="favorites"&&favorite.length){
+          setMovies(favorite)
+          setLoading(false)
+          selecttMovie(favorite[0])
+        }else if(path===""){
+          const searchUrl = search
         ? "/search/movie?query=" + search + `&${apiKey}`
         : `/movie/popular?${apiKey}`;
       get(searchUrl).then((data) => {
         setMovies(data.results);
-        setSelectedMovie(data.results[0]);
         setLoading(false);
         if (data.results.length) {
-          fetchMovie(data.results[0].id);
+          selecttMovie(data.results[0]);
         }
       });
+        }   
     }
-  
-  , [search]);
+  , [search,favorite,location]);
+
+
   if (loading) {
     return <Spinner />;
   }
 
-  const fetchMovie = async (id) => {
-    const { data } = await axios.get(
-      `${url}/movie/${id}?${apiKey}&append_to_response=videos`
-    );
-    if (data.videos && data.videos.results) {
-      const trailer1 = data.videos.results.find(
-        (vid) => vid.name === "Official Trailer"
-      );
-      setTrailer(trailer1 ? trailer1 : data.videos.results[0]);
-      setSelectedMovie(data);
-    }
-  };
-
-
-  const selectMovie = (movie) => {
-    fetchMovie(movie.id);
-    setPlaying(false);
-    setSelectedMovie(movie);
-    window.scrollTo(0, 0);
-  };
-
-  console.log("peliculasssss", selectedMovie);
 
   return (
     <>
@@ -126,7 +146,9 @@ export function MoviesGrid(favorite) {
       )}
 
       <ul className={style.moviesGrid}>
-        {movies.map((movie) => (
+        {path==="favorites"?favorite.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} selectedMovie={selectMovie}/>
+        )):movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} selectedMovie={selectMovie}/>
         ))}
       </ul>

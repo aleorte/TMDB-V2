@@ -1,5 +1,6 @@
 
 export const styleLogin={
+    position:"relative",
     zIndex:6,
     padding:3,
     height:"450px",
@@ -14,8 +15,9 @@ export const styleText={
 } 
 
 export const styleTextField={
+    maxWidth:"30vh",
     backgroundColor:"#515151",
-
+    paddingLeft:"20",
 }
 
 export const styleButton={
@@ -30,3 +32,8 @@ export const styleButton2={
     color: "white",
      ":hover":{shadow:"4px 4px 10px #cb3234"
    }}
+
+
+export const styleContainer={
+    paddingTop:"80px"
+}

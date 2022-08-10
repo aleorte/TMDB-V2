@@ -1,7 +1,9 @@
-import { ArrowDropDown, Notifications, Search } from "../../styled/materialIcon";
-import { useState,useEffect } from "react";
+import { Search } from "../../styled/materialIcon";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UseQuery } from "../../utils/UseQuery";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../State/user";
 import "./Navbar.css";
 
 export const Navbar = () => {
@@ -10,8 +12,12 @@ export const Navbar = () => {
   const [inputHover, setInputHover] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const query = UseQuery();
+
   const search = query.get("search");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     navigate("/?search=" + searchText);
@@ -24,18 +30,28 @@ export const Navbar = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
     return () => (window.onscroll = null);
   };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
+
+  console.log(user)
+
   return (
     <div className={isScrolled ? "scrolled" : "navbar"}>
       <div className="container">
         <div className="left">
-       
-          <span ><Link to={"/"}>Inicio</Link></span>
-          <span><Link to={"/favorites"}>Mis favoritos</Link></span>
+          <span>
+            <Link to={"/"}>Inicio</Link>
+          </span>
+          <span>
+            <Link to={`/favorites/${user.userInfo.id}`}>Mis favoritos</Link>
+          </span>
         </div>
         <div className="right">
-        <div className={`search ${showSearch ? "show-search" : ""}`}>
-        <button
-              
+          <div className={`search ${showSearch ? "show-search" : ""}`}>
+            <button
               onFocus={() => setShowSearch(true)}
               onBlur={() => {
                 if (!inputHover) {
@@ -43,39 +59,40 @@ export const Navbar = () => {
                 }
               }}
             >
-              <Search className="searchButton"/>
+              <Search className="searchButton" />
             </button>
-            {showSearch ? 
-            <form className onSubmit={handleSubmit}>
-            <input
-              value={searchText}
-              onChange={(e) => {
-                setSearchText(e.target.value);
-              }}
-              className={showSearch?"searchTextFieldSearch":"TextFieldSearch"}
-              type="text"
-              placeholder="Search"
-              onMouseEnter={() => setInputHover(true)}
-              onMouseLeave={() => setInputHover(false)}
-              onBlur={() => {
-                setShowSearch(false);
-                setInputHover(false);
-              }}
-            />
-        </form>: ""}
-            
-             </div>
-          <img
-            src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-            alt=""
-          />
-          <div className="profile">
-            <ArrowDropDown className="icon" />
-            <div className="options">
-              <span>Settings</span>
-              <span>Logout</span>
-            </div>
+            {showSearch ? (
+              <form className onSubmit={handleSubmit}>
+                <input
+                  value={searchText}
+                  onChange={(e) => {
+                    setSearchText(e.target.value);
+                  }}
+                  className={
+                    showSearch ? "searchTextFieldSearch" : "TextFieldSearch"
+                  }
+                  type="text"
+                  placeholder="Search"
+                  onMouseEnter={() => setInputHover(true)}
+                  onMouseLeave={() => setInputHover(false)}
+                  onBlur={() => {
+                    setShowSearch(false);
+                    setInputHover(false);
+                  }}
+                />
+              </form>
+            ) : (
+              ""
+            )}
           </div>
+          <span
+          className="closeSesion"
+            onClick={() => {
+              handleLogout();
+            }}
+          >
+            Cerrar sesión
+          </span>
         </div>
       </div>
     </div>

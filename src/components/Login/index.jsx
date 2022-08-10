@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import {
@@ -9,37 +10,40 @@ import {
   Typography,
   Container
 } from "../../styled/material";
-import { styleLogin, styleText, styleTextField, styleButton,styleButton2} from "./style";
+import { styleLogin, styleText, styleTextField, styleButton,styleButton2, styleContainer} from "./style";
 import { Card } from "@mui/material";
 import movieCollage from "../../assets/collage.jpg"
 import "./style.css"
+import { sendLoginRequest } from "../../State/user";
+
 
 export function Login() {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [isSingUp, setIsSingUp] = useState(false);
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const dispatch=useDispatch()
+  const user = useSelector((state) => state.user);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    user.userInfo.email&&navigate("/")
+  },[user])
 
   const handleSubmit = (e) => {
     e.preventDefault();
   isSingUp?
-
-    (axios
-      .post("http://localhost:3001/api/user/login/", {
-        email: email,
-        password: pwd,
-      })
-      .then((res) => {
-        setEmail(res.data.email);
-        navigate("/");
-      })
-      .catch((err) => console.log(err))):
+    (dispatch(sendLoginRequest({
+      email: email,
+      password: pwd,
+    }))
+    )
+    :
       (axios
-        .post("http://localhost:3001/api/user/register/", {
+        .post("http://localhost:3001/api/user/register", {
           email: email,
           password: pwd,
-        }))
+        })
+        .then(()=>setIsSingUp(true)))
   };
 
 
@@ -52,6 +56,7 @@ export function Login() {
   return (
     <>
     <img className="backG" src={movieCollage} alt=""/>
+    <Box sx={styleContainer}>
     <Box
       display="flex"
       flexDirection="column"
@@ -72,7 +77,7 @@ export function Login() {
         name="Email"
         value={email}
         margin="normal"
-        placeholder="Email"
+        placeholder="  Email"
         type={"email"}
         onChange={(e) => setEmail(e.target.value)}
         InputProps={{}}
@@ -101,6 +106,7 @@ export function Login() {
       <Button onClick={resetState} sx={styleButton2} >
         {isSingUp ? "Registrarse" : "Ya tengo una cuenta"}
       </Button>
+    </Box>
     </Box>
     </>
   );

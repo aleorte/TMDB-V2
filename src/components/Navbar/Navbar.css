@@ -84,6 +84,7 @@
               border: none;
               cursor: pointer;
               color: aliceblue;
+
             }
 
 
@@ -98,12 +99,17 @@
             }
           .show-search {
             border: 1px solid white;
-            background-color: rgba(0, 0, 0, 0.6);}
+            background-color: rgba(0, 0, 0, 0.6);
+            margin-right: 18px;}
             .TextFieldSearch {
               width: 100%;
               opacity: 1;
               visibility: visible;
               padding: 0.3rem;
             }
+
+          .closeSesion{
+            cursor: pointer;
+          }
           
         
