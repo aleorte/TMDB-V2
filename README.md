@@ -4,7 +4,7 @@ Es una pagina web realizada en el plazo de una semana, durante el
 Coding Bootcamp de Plataforma 5.
 
 La misma fue un proyecto individual, en el cual se muestran películas y sus detalles(descripción,puntuacíon,trailer,etc).Consumiendo la información de la API de The Movie Database (TMDB).
-Tambien es posible crear un usuario y agregar a favoritos.
+También es posible crear un usuario y agregar a favoritos.
 
 ### 🛠 Tecnologías y herramientas utilizadas
 
