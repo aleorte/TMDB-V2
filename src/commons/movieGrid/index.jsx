@@ -10,6 +10,7 @@ import { url } from "../../utils/https";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import {getFavorites} from "../../State/favorite";
+import {Star, StarBorder} from "../../styled/materialIcon"
 
 export function MoviesGrid() {
   const [movies, setMovies] = useState([]);
@@ -17,6 +18,7 @@ export function MoviesGrid() {
   const [loading, setLoading] = useState(true);
   const [trailer, setTrailer] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [starValue, setStarValue] = useState(0);
   const dispatch=useDispatch()
   const favorite = useSelector((state) => state.favorite);
   const user = useSelector((state) => state.user);
@@ -26,17 +28,20 @@ export function MoviesGrid() {
   const search = query.get("search");
   const apiKey = "api_key=9187b8dc72c1d964dc650264b4b28adf";
 
+  const star = Array(5).fill(0); 
+  
 
 const fetchMovie = async (id) => {
   const { data } = await axios.get(
     `${url}/movie/${id}?${apiKey}&append_to_response=videos`
   );
-  if (data.videos && data.videos.results) {
+  if (data.videos.results) {
     const trailer1 = data.videos.results.find(
       (vid) => vid.name === "Official Trailer"
     );
     setTrailer(trailer1 ? trailer1 : data.videos.results[0]);
     setSelectedMovie(data);
+    setStarValue(data.vote_average/2)
   }
 };
 
@@ -48,15 +53,11 @@ const selectMovie = (movie) => {
 };
 const selecttMovie = (movie) => {
   path==="favorites"?fetchMovie(movie.movieId):fetchMovie(movie.id);
-  setPlaying(false);
-  window.scrollTo(0, 0);
+  setPlaying(false)
 };
 
   useEffect(()=>{
-    const asyncfun=async()=>{
-      const fav=await dispatch(getFavorites(user.userInfo.id))
-    return fav}
-    asyncfun()
+   dispatch(getFavorites(user.userInfo.id))
   },[])
 
   useEffect(() => {
@@ -135,7 +136,8 @@ const selecttMovie = (movie) => {
             >
               Reproducir trailer
             </button>
-            <h1>{selectedMovie.title}</h1>
+            <h1 className={style.heroOverview}>{selectedMovie.title}</h1>
+            { star.map((_, index) =>starValue>index?<Star className={style.heroStar}/>:<StarBorder className={style.heroStar}/>)}
             {selectedMovie.overview ? (
               <p className={style.heroOverview}>{selectedMovie.overview}</p>
             ) : null}

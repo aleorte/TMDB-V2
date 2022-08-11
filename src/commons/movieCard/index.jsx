@@ -14,7 +14,7 @@ export function MovieCard({ movie, selectedMovie }) {
     typeof movie.adult==="boolean"
       ? (remove = { movieId: movie.id, userId: user.userInfo.id })
       : (remove = { movieId: movie.movieId, userId: user.userInfo.id });
-    dispatch(deleteFavorites(remove))
+    dispatch(deleteFavorites(remove)).then(()=>dispatch(getFavorites(user.userInfo.id)))
   };
 
   const addFavorite = (movie) => {
@@ -28,8 +28,6 @@ export function MovieCard({ movie, selectedMovie }) {
     };
     dispatch(addFavorites(fav));
   };
-  console.log("movieeeeeeeeee", movie);
-  console.log("FAAAAAAAAAAAV",favorite)
   const imagen = "https://image.tmdb.org/t/p/w300" + movie.poster_path;
   return (
     <>
