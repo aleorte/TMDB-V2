@@ -6,7 +6,7 @@ Coding Bootcamp de Plataforma 5.
 La misma fue un proyecto individual, en el cual se muestran películas y sus detalles(descripción,puntuacíon,trailer,etc).Consumiendo la información de la API de The Movie Database (TMDB).
 Tambien es posible crear un usuario y agregar a favoritos.
 
-### 🛠 Tecnologias y herramientas utilizadas
+### 🛠 Tecnologías y herramientas utilizadas
 
  <p> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a>
  <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a>
