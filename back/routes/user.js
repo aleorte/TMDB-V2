@@ -3,9 +3,17 @@ const passport = require("passport");
 const {User} = require("../models");
 const userRouter = express.Router();
 
-userRouter.post("/register", (req, res) => {
-  User.create(req.body).then((user) => res.status(201).send(user));
-});
+userRouter.post("/register", async (req, res) => {
+  const {email}=req.body
+  User.findOne({where:{email}}).then(user=>{
+    if(user===null){
+      User.create(req.body).then((user) => res.status(201).send(user));
+    }
+  })
+  })
+    
+  
+;
 
 userRouter.post("/login", passport.authenticate("local"), (req, res) => {
   res.send(req.user);
