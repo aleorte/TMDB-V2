@@ -15,6 +15,8 @@ export const styleText={
 } 
 
 export const styleTextField={
+    marginTop:2,
+    height:"40px",
     maxWidth:"30vh",
     backgroundColor:"#515151",
     paddingLeft:"20",

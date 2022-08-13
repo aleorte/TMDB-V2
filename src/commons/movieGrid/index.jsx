@@ -86,14 +86,15 @@ const selecttMovie = (movie) => {
     return <Spinner />;
   }
 
-
+ 
   return (
     <>
       {movies.length && selectedMovie ? (
         <div
           className={style.hero}
-          style={{
-            backgroundImage: `url(https://image.tmdb.org/t/p/original${selectedMovie.backdrop_path})`,
+          style={
+           {
+           backgroundImage: `url(https://image.tmdb.org/t/p/original${selectedMovie.backdrop_path})`,
           }}
         >
           <div className={style.heroContent}>

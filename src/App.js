@@ -8,7 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Provider } from "react-redux";
 import theme from './styled/theme.tsx'
 import store from "./State/store";
-
+import { NotFound } from "./components/404";
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
           </Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/favorites/:userId" element={<FavoriteView />}></Route>
+          <Route path="*" element={<NotFound/>}></Route>
         </Routes>
     </Router>
     </ThemeProvider>

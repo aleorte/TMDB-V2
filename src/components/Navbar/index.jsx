@@ -5,6 +5,7 @@ import { UseQuery } from "../../utils/UseQuery";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../State/user";
 import "./Navbar.css";
+import { SvgSearch } from "../../utils/SvgSearch";
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,7 +37,7 @@ export const Navbar = () => {
     navigate("/login");
   };
 
-  console.log(user)
+  console.log(user);
 
   return (
     <div className={isScrolled ? "scrolled" : "navbar"}>
@@ -50,43 +51,23 @@ export const Navbar = () => {
           </span>
         </div>
         <div className="right">
-          <div className={`search ${showSearch ? "show-search" : ""}`}>
-            <button
-              onFocus={() => setShowSearch(true)}
-              onBlur={() => {
-                if (!inputHover) {
-                  setShowSearch(false);
-                }
+          <form className="search" onSubmit={handleSubmit}>
+            <input type="checkbox" id="trigger" className="search__checkbox" />
+            <label className="search__label-init" for="trigger"></label>
+            <label className="search__label-active" for="trigger"></label>
+            <div className="search__border"></div>
+            <input
+              type="text"
+              className="search__input"
+              value={searchText}
+              onChange={(e) => {
+                setSearchText(e.target.value);
               }}
-            >
-              <Search className="searchButton" />
-            </button>
-            {showSearch ? (
-              <form className onSubmit={handleSubmit}>
-                <input
-                  value={searchText}
-                  onChange={(e) => {
-                    setSearchText(e.target.value);
-                  }}
-                  className={
-                    showSearch ? "searchTextFieldSearch" : "TextFieldSearch"
-                  }
-                  type="text"
-                  placeholder="Search"
-                  onMouseEnter={() => setInputHover(true)}
-                  onMouseLeave={() => setInputHover(false)}
-                  onBlur={() => {
-                    setShowSearch(false);
-                    setInputHover(false);
-                  }}
-                />
-              </form>
-            ) : (
-              ""
-            )}
-          </div>
+            />
+            <div className="search__close"></div>
+          </form>
           <span
-          className="closeSesion"
+            className="closeSesion"
             onClick={() => {
               handleLogout();
             }}
